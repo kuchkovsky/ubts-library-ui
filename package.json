@@ -44,6 +44,7 @@
     "classnames": "^2.2.6",
     "dotenv-webpack": "^1.6.0",
     "filepond": "^3.7.4",
+    "filepond-plugin-file-validate-type": "^1.2.1",
     "filepond-plugin-image-preview": "^3.1.6",
     "history": "^4.7.2",
     "immutable": "^4.0.0-rc.12",
@@ -60,7 +61,10 @@
     "redux-thunk": "^2.3.0"
   },
   "lint-staged": {
-    "*.js": ["eslint ./src --cache --fix", "git add"]
+    "*.js": [
+      "eslint ./src --cache --fix",
+      "git add"
+    ]
   },
   "husky": {
     "hooks": {
