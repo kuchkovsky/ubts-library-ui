@@ -1,17 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { FilePond, registerPlugin } from 'react-filepond';
-import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
-import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
+import { FilePond } from 'react-filepond';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { toBase64 } from '../../utils/files';
-
-import 'filepond/dist/filepond.min.css';
-import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
-
-registerPlugin(FilePondPluginFileValidateType);
-registerPlugin(FilePondPluginImagePreview);
 
 const styles = {
   root: {
@@ -51,6 +43,7 @@ class ImagePicker extends Component {
           onupdatefiles={this.handleChange}
           onremovefile={this.handleRemove}
           acceptedFileTypes={['image/jpeg', 'image/png']}
+          imagePreviewHeight={500}
         />
       </div>
     );

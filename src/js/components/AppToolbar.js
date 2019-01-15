@@ -12,7 +12,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import MenuIcon from '@material-ui/icons/Menu';
 import { withStyles } from '@material-ui/core/styles';
-import ProgressLink from '../containers/ProgressLinkContainer';
+import ProgressLink from '../containers/ProgressLink';
 import * as routes from '../utils/routes';
 
 const styles = theme => ({

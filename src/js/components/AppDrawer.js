@@ -13,7 +13,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import UploadBookIcon from '@material-ui/icons/AddCircle';
 import SignInIcon from '@material-ui/icons/AccountCircle';
 import SignOutIcon from '@material-ui/icons/ExitToApp';
-import ProgressLink from '../containers/ProgressLinkContainer';
+import ProgressLink from '../containers/ProgressLink';
 import * as routes from '../utils/routes';
 
 const styles = {

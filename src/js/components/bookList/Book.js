@@ -11,9 +11,12 @@ import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
+import DownloadIcon from '@material-ui/icons/CloudDownload';
 import Typography from '@material-ui/core/Typography';
-import * as routes from '../../utils/routes';
+import { BOOKS } from '../../utils/routes';
+import { BOOK_DOCUMENT } from '../../utils/apiEndpoints';
 import BookInfoItem from './BookInfoItem';
+import { downloadFile } from '../../utils/files';
 
 export const bigDisplayInfoStyles = {
   fontSize: 15,
@@ -36,7 +39,7 @@ const styles = theme => ({
   },
 });
 
-const Book = ({ classes, data, applyFilter, booksTab, onDelete }) => (
+const Book = ({ classes, data, applyFilter, booksTab, authenticated, onDelete }) => (
   <ListItem button>
     <ListItemAvatar>
       <Avatar alt={data.title}
@@ -63,24 +66,38 @@ const Book = ({ classes, data, applyFilter, booksTab, onDelete }) => (
               <br/>
             </React.Fragment> }
           { !!data.tags.length && <BookInfoItem title="Теги" data={data.tags} applyFilter={applyFilter}/> }
-          { Object.prototype.hasOwnProperty.call(data, 'availableOffline') &&
-            <Typography className={classes.format} component="span" color="textPrimary">
-              В наявності:{data.availableOffline && ' друкована книга,'} електронна книга
-            </Typography> }
+          <Typography className={classes.format} component="span" color="textPrimary">
+            В наявності:
+            {` ${data.availableOffline ? `друкована книга${data.availableOnline ? ', ' : ''}` : ''}`}
+            {` ${data.availableOnline ? 'електронна книга' : ''}`}
+            { !(data.availableOffline || data.availableOnline) && 'немає' }
+          </Typography>
         </React.Fragment>
       }/>
     <ListItemSecondaryAction>
       <Grid container direction="column">
-        <Grid>
-          <IconButton aria-label="Edit" component={Link} to={`${routes.BOOKS}/${data.id}`}>
-            <EditIcon/>
-          </IconButton>
-        </Grid>
-        <Grid>
-          <IconButton aria-label="Delete" onClick={() => onDelete(data.id)}>
-            <DeleteIcon/>
-          </IconButton>
-        </Grid>
+        { authenticated &&
+            <React.Fragment>
+              <Grid>
+                <IconButton aria-label="Edit" component={Link} to={`${BOOKS}/${data.id}`}>
+                  <EditIcon/>
+                </IconButton>
+              </Grid>
+              <Grid>
+                <IconButton aria-label="Delete" onClick={() => onDelete(data.id)}>
+                  <DeleteIcon/>
+                </IconButton>
+              </Grid>
+            </React.Fragment> }
+        { data.availableOnline &&
+            <Grid>
+              <IconButton
+                aria-label="Download"
+                onClick={() => downloadFile(`${process.env.API_URL}${BOOK_DOCUMENT(data.id)}`)}
+              >
+                <DownloadIcon/>
+              </IconButton>
+            </Grid> }
       </Grid>
     </ListItemSecondaryAction>
   </ListItem>
@@ -95,9 +112,11 @@ Book.propTypes = {
     tags: PropTypes.arrayOf(PropTypes.string).isRequired,
     cover: PropTypes.string,
     availableOffline: PropTypes.bool,
+    availableOnline: PropTypes.bool,
   }).isRequired,
   applyFilter: PropTypes.func.isRequired,
   booksTab: PropTypes.number.isRequired,
+  authenticated: PropTypes.bool.isRequired,
   onDelete: PropTypes.func.isRequired,
 };
 

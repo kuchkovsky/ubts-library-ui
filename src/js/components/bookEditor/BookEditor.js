@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 import SnackbarMessage from '../shared/SnackbarMessage';
 import { formStyles } from '../../styles/form';
-import Form from './Form';
+import Form from '../../containers/bookEditor/Form';
 
 class BookEditor extends Component {
   isEditMode = () => this.props.match.params.id !== 'new';

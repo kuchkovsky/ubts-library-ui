@@ -15,7 +15,7 @@ const initialState = fromJS({
 const bookListReducer = (state = initialState, action) => {
   switch (action.type) {
   case actions.BOOK_LIST_BOOKS_LOADED:
-    return state.set('books', fromJS(action.payload));
+    return state.set('books', fromJS(action.payload.reverse()));
 
   case actions.BOOK_LIST_CHANGE_SEARCH_QUERY:
     return state.set('searchQuery', action.payload);

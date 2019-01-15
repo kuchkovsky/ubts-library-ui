@@ -25,6 +25,12 @@ export const showBookUploadSuccessMessage = createAction(BOOK_EDITOR_SHOW_UPLOAD
 export const BOOK_EDITOR_HIDE_UPLOAD_SUCCESS_MESSAGE = 'BOOK_EDITOR_HIDE_UPLOAD_SUCCESS_MESSAGE';
 export const hideBookUploadSuccessMessage = createAction(BOOK_EDITOR_HIDE_UPLOAD_SUCCESS_MESSAGE);
 
+export const BOOK_EDITOR_DOCUMENT_UPLOADING = 'BOOK_EDITOR_DOCUMENT_UPLOADING';
+export const documentUploading = createAction(BOOK_EDITOR_DOCUMENT_UPLOADING);
+
+export const BOOK_EDITOR_DOCUMENT_UPLOADED = 'BOOK_EDITOR_DOCUMENT_UPLOADED';
+export const documentUploaded = createAction(BOOK_EDITOR_DOCUMENT_UPLOADED);
+
 export const loadBook = id =>
   dispatch =>
     dispatch(loadMainContent(`${BOOKS}/${id}`, bookLoaded));

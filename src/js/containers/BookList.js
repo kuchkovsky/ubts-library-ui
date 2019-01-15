@@ -18,6 +18,7 @@ const mapStateToProps = state => ({
   booksTab: state.getIn(['bookList', 'booksTab']),
   deleteAlert: state.getIn(['bookList', 'deleteAlert']).toJS(),
   deleteErrorMessage: state.getIn(['bookList', 'deleteErrorMessage']),
+  authenticated: state.getIn(['auth', 'authenticated']),
 });
 
 const mapDispatchToProps = dispatch => ({

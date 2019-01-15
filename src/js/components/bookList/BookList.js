@@ -131,7 +131,14 @@ class BookList extends Component {
   }
 
   render() {
-    const { classes, books, booksTab, changeSearchQuery, showDeleteAlert } = this.props;
+    const {
+      classes,
+      books,
+      booksTab,
+      changeSearchQuery,
+      authenticated,
+      showDeleteAlert,
+    } = this.props;
 
     const bookList = books
       .filter(this.seminaryBooksFilter)
@@ -141,6 +148,7 @@ class BookList extends Component {
           data={book}
           applyFilter={changeSearchQuery}
           booksTab={booksTab}
+          authenticated={authenticated}
           onDelete={showDeleteAlert}
           key={book.id}
         />
@@ -175,6 +183,7 @@ BookList.propTypes = {
   loadBooks: PropTypes.func.isRequired,
   changeSearchQuery: PropTypes.func.isRequired,
   changeBooksTab: PropTypes.func.isRequired,
+  authenticated: PropTypes.bool.isRequired,
   deleteAlert: PropTypes.object.isRequired,
   showDeleteAlert: PropTypes.func.isRequired,
   hideDeleteAlert: PropTypes.func.isRequired,

@@ -13,12 +13,15 @@ const initialState = fromJS({
     availableOffline: false,
     tags: [],
     coverFile: '',
+    uploadedDocument: '',
+    document: '',
   },
   upload: {
     pending: false,
     error: false,
     errorMessage: '',
   },
+  documentUploadPending: false,
   uploadSuccessMessage: false,
 });
 
@@ -42,6 +45,12 @@ const bookEditorReducer = (state = initialState, action) => {
 
   case actions.BOOK_EDITOR_BOOK_UPLOAD_ERROR:
     return state.mergeIn(['upload'], fromJS({ pending: false, error: true, errorMessage: action.payload }));
+
+  case actions.BOOK_EDITOR_DOCUMENT_UPLOADING:
+    return state.set('documentUploadPending', true);
+
+  case actions.BOOK_EDITOR_DOCUMENT_UPLOADED:
+    return state.set('documentUploadPending', false);
 
   case actions.BOOK_EDITOR_SHOW_UPLOAD_SUCCESS_MESSAGE:
     return state.set('uploadSuccessMessage', true);

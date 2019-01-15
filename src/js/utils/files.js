@@ -1,3 +1,5 @@
+import axios from 'axios';
+import { BOOK_DOWNLOAD_TOKEN } from './apiEndpoints';
 
 export const toBase64 = file =>
   new Promise((resolve, reject) => {
@@ -12,5 +14,15 @@ export const toBase64 = file =>
     };
     reader.onerror = error => reject(error);
   });
+
+export const downloadFile = url => {
+  axios.get(BOOK_DOWNLOAD_TOKEN)
+    .then(response => {
+      const link = document.createElement('a');
+      link.href = `${url}?token=${response.data.token}`;
+      document.body.appendChild(link);
+      link.click();
+    });
+};
 
 export default toBase64;

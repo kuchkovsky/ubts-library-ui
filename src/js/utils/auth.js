@@ -5,7 +5,7 @@ export const getToken = () => localStorage.getItem('token');
 
 export const saveToken = token => localStorage.setItem('token', token);
 
-export const generateAuthHeader = token => `Bearer ${token}`;
+export const generateAuthHeader = () => `Bearer ${getToken()}`;
 
 export const isAuthenticated = () => !!getToken();
 
@@ -13,7 +13,7 @@ export const deleteToken = () => localStorage.removeItem('token');
 
 export const setupAxiosAuthHeader = () => {
   if (isAuthenticated()) {
-    axios.defaults.headers.common.Authorization = generateAuthHeader(getToken());
+    axios.defaults.headers.common.Authorization = generateAuthHeader();
   }
 };
 
