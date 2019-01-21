@@ -2,11 +2,27 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, FieldArray } from 'redux-form/immutable';
 import Button from '@material-ui/core/Button';
+import Collapse from '@material-ui/core/Collapse';
 import ReduxTextField from '../shared/ReduxTextField';
 import ReduxCheckbox from '../shared/ReduxCheckbox';
 import ImagePicker from './ImagePicker';
 import TagEditor from './TagEditor';
 import DocumentPicker from './DocumentPicker';
+
+const OfflineBookFields = ({ availableOffline }) => (
+  <Collapse in={availableOffline}>
+    <Field name="numberOfCopies" label="Кількість примірників"
+      component={ReduxTextField}
+      type="number" fullWidth variant="outlined" margin="normal"/>
+    <Field name="price" label="Ціна"
+      component={ReduxTextField}
+      type="number" fullWidth variant="outlined" margin="normal"/>
+  </Collapse>
+);
+
+OfflineBookFields.propTypes = {
+  availableOffline: PropTypes.bool,
+};
 
 const Form = props => {
   const {
@@ -36,11 +52,18 @@ const Form = props => {
       <Field name="pages" label="Кількість сторінок"
         component={ReduxTextField}
         type="number" fullWidth variant="outlined" margin="normal"/>
+      <Field name="classifier" label="Класифікатор"
+        component={ReduxTextField}
+        fullWidth variant="outlined" margin="normal"/>
       <Field name="description" label="Опис книги"
+        component={ReduxTextField}
+        fullWidth variant="outlined" margin="normal"/>
+      <Field name="notes" label="Примітки"
         component={ReduxTextField}
         fullWidth variant="outlined" margin="normal"/>
       <Field name="availableOffline" label="Є в друкованому форматі"
         component={ReduxCheckbox}/>
+      <OfflineBookFields {...props}/>
       <FieldArray name="tags" component={TagEditor}/>
       <Field name="coverFile" type="file" component={ImagePicker}/>
       <DocumentPicker {...other}/>

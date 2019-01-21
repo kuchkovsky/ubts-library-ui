@@ -42,6 +42,7 @@ const selector = formValueSelector(formName);
 
 const SelectorForm = connect(
   state => ({
+    availableOffline: selector(state, 'availableOffline'),
     document: selector(state, 'document'),
   }),
 )(ReduxForm);
