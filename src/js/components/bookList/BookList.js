@@ -33,7 +33,7 @@ const styles = theme => ({
 
 class BookList extends Component {
   componentDidMount() {
-    if (!this.props.books.length) {
+    if (!this.props.emptyList && !this.props.books.length) {
       this.props.loadBooks();
     }
   }
@@ -178,6 +178,7 @@ class BookList extends Component {
 BookList.propTypes = {
   classes: PropTypes.object.isRequired,
   books: PropTypes.array.isRequired,
+  emptyList: PropTypes.bool.isRequired,
   searchQuery: PropTypes.string.isRequired,
   booksTab: PropTypes.number.isRequired,
   loadBooks: PropTypes.func.isRequired,

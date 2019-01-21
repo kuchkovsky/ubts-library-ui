@@ -13,12 +13,19 @@ export const contentLoaded = createAction(CONTENT_LOADED);
 export const CONTENT_LOAD_ERROR = 'CONTENT_LOAD_ERROR';
 export const contentLoadError = createAction(CONTENT_LOAD_ERROR);
 
+export const CONTENT_LOAD_EMPTY_CONTENT = 'CONTENT_LOAD_EMPTY_CONTENT';
+export const contentLoadEmpty = createAction(CONTENT_LOAD_EMPTY_CONTENT);
+
 export const loadMainContent = (url, onSuccessAction) =>
   dispatch => {
     dispatch(contentLoading());
     axios.get(url)
       .then(response => {
-        dispatch(onSuccessAction(response.data));
+        const { data } = response;
+        if (Array.isArray(data) && !data.length) {
+          dispatch(contentLoadEmpty());
+        }
+        dispatch(onSuccessAction(data));
         dispatch(contentLoaded());
       })
       .catch(error => dispatch(contentLoadError({
