@@ -143,6 +143,7 @@ class BookList extends Component {
     const bookList = books
       .filter(this.seminaryBooksFilter)
       .filter(this.queryFilter)
+      .slice(0, 50)
       .map(book => (
         <Book
           data={book}
