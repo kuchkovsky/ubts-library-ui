@@ -26,7 +26,7 @@ const styles = {
   },
 };
 
-const AppDrawer = ({ classes, open, toggleDrawer, authenticated, signOut }) => (
+const AppDrawer = ({ classes, open, toggleDrawer, authenticated, admin, signOut }) => (
   <SwipeableDrawer open={open} onOpen={toggleDrawer} onClose={toggleDrawer}>
     <div tabIndex={0} role="button" onClick={toggleDrawer}>
       <div className={classes.list}>
@@ -41,7 +41,7 @@ const AppDrawer = ({ classes, open, toggleDrawer, authenticated, signOut }) => (
             </ListItemIcon>
             <ListItemText primary={routes.deriveHeaderFromPath(routes.HOME)}/>
           </ListItem>
-          { authenticated &&
+          { admin &&
               <ListItem button key={routes.NEW_BOOK} component={Link} to={routes.NEW_BOOK}>
                 <ListItemIcon>
                   <UploadBookIcon/>
@@ -73,6 +73,7 @@ AppDrawer.propTypes = {
   open: PropTypes.bool.isRequired,
   toggleDrawer: PropTypes.func.isRequired,
   authenticated: PropTypes.bool.isRequired,
+  admin: PropTypes.bool.isRequired,
   signOut: PropTypes.func.isRequired,
 };
 

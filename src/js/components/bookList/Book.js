@@ -39,7 +39,7 @@ const styles = theme => ({
   },
 });
 
-const Book = ({ classes, data, applyFilter, booksTab, authenticated, onDelete }) => (
+const Book = ({ classes, data, applyFilter, booksTab, admin, onDelete }) => (
   <ListItem button>
     <ListItemAvatar>
       <Avatar alt={data.title}
@@ -76,7 +76,7 @@ const Book = ({ classes, data, applyFilter, booksTab, authenticated, onDelete })
       }/>
     <ListItemSecondaryAction>
       <Grid container direction="column">
-        { authenticated &&
+        { admin &&
             <React.Fragment>
               <Grid>
                 <IconButton aria-label="Edit" component={Link} to={`${BOOKS}/${data.id}`}>
@@ -116,7 +116,7 @@ Book.propTypes = {
   }).isRequired,
   applyFilter: PropTypes.func.isRequired,
   booksTab: PropTypes.number.isRequired,
-  authenticated: PropTypes.bool.isRequired,
+  admin: PropTypes.bool.isRequired,
   onDelete: PropTypes.func.isRequired,
 };
 

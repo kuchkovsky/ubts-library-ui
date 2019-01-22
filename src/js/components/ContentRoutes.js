@@ -7,7 +7,7 @@ import BookEditor from '../containers/bookEditor/BookEditor';
 import SignIn from '../containers/signIn/SignIn';
 import * as routes from '../utils/routes';
 
-const SecuredBookEditor = RequireAuth(BookEditor);
+const SecuredBookEditor = RequireAuth(BookEditor, true);
 
 const ContentRoutes = ({ authenticated }) => (
   <Switch>

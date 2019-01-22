@@ -54,7 +54,7 @@ LocationAwareButton.propTypes = {
   children: PropTypes.object,
 };
 
-const AppToolbar = ({ classes, toggleDrawer, location, authenticated, signOut }) => (
+const AppToolbar = ({ classes, toggleDrawer, location, authenticated, admin, signOut }) => (
   <AppBar position="static" className={classes.root}>
     <Toolbar>
       <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" onClick={toggleDrawer}>
@@ -68,7 +68,7 @@ const AppToolbar = ({ classes, toggleDrawer, location, authenticated, signOut })
           component={ProgressLink} from={location.pathname} to={routes.HOME} delay={0}>
           <HomeIcon className={classes.leftIcon}/>
         </LocationAwareButton>
-        { authenticated &&
+        { admin &&
           <LocationAwareButton text={routes.deriveHeaderFromPath(routes.NEW_BOOK)} color="inherit"
             component={Link} from={location.pathname} to={routes.NEW_BOOK}>
             <AddBookIcon className={classes.leftIcon}/>
@@ -99,6 +99,7 @@ AppToolbar.propTypes = {
     pathname: PropTypes.string.isRequired,
   }),
   authenticated: PropTypes.bool.isRequired,
+  admin: PropTypes.bool.isRequired,
   signOut: PropTypes.func.isRequired,
 };
 

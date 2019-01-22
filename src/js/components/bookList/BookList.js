@@ -136,7 +136,7 @@ class BookList extends Component {
       books,
       booksTab,
       changeSearchQuery,
-      authenticated,
+      admin,
       showDeleteAlert,
     } = this.props;
 
@@ -149,7 +149,7 @@ class BookList extends Component {
           data={book}
           applyFilter={changeSearchQuery}
           booksTab={booksTab}
-          authenticated={authenticated}
+          admin={admin}
           onDelete={showDeleteAlert}
           key={book.id}
         />
@@ -185,7 +185,7 @@ BookList.propTypes = {
   loadBooks: PropTypes.func.isRequired,
   changeSearchQuery: PropTypes.func.isRequired,
   changeBooksTab: PropTypes.func.isRequired,
-  authenticated: PropTypes.bool.isRequired,
+  admin: PropTypes.bool.isRequired,
   deleteAlert: PropTypes.object.isRequired,
   showDeleteAlert: PropTypes.func.isRequired,
   hideDeleteAlert: PropTypes.func.isRequired,

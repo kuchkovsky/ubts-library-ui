@@ -7,6 +7,7 @@ import AppDrawer from '../components/AppDrawer';
 const mapStateToProps = state => ({
   open: state.getIn(['root', 'drawer', 'open']),
   authenticated: state.getIn(['auth', 'authenticated']),
+  admin: state.getIn(['auth', 'admin']),
 });
 
 const mapDispatchToProps = dispatch => ({

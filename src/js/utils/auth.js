@@ -7,9 +7,19 @@ export const saveToken = token => localStorage.setItem('token', token);
 
 export const generateAuthHeader = () => `Bearer ${getToken()}`;
 
+export const deleteToken = () => localStorage.removeItem('token');
+
 export const isAuthenticated = () => !!getToken();
 
-export const deleteToken = () => localStorage.removeItem('token');
+export const isAdmin = () => {
+  const token = getToken();
+  if (token) {
+    const encodedProfile = token.split('.')[1];
+    const profile = JSON.parse(window.atob(encodedProfile));
+    return profile.roles.includes('ROLE_ADMIN');
+  }
+  return false;
+};
 
 export const setupAxiosAuthHeader = () => {
   if (isAuthenticated()) {

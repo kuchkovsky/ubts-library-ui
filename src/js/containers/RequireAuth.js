@@ -3,18 +3,18 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { SIGN_IN } from '../utils/routes';
 
-export default ComposedComponent => {
+export default (ComposedComponent, adminOnly = false) => {
   class RequireAuth extends Component {
     /* eslint-disable */
 
     UNSAFE_componentWillMount() {
-      if (!this.props.authenticated) {
+      if (!this.props.authenticated || (adminOnly && !this.props.admin)) {
         this.props.history.push(SIGN_IN);
       }
     }
   
     UNSAFE_componentWillUpdate() {
-      if (!this.props.authenticated) {
+      if (!this.props.authenticated || (adminOnly && !this.props.admin)) {
         this.props.history.push(SIGN_IN);
       }
     }
@@ -28,6 +28,7 @@ export default ComposedComponent => {
 
   RequireAuth.propTypes = {
     authenticated: PropTypes.bool.isRequired,
+    admin: PropTypes.bool.isRequired,
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
     }).isRequired,
@@ -35,6 +36,7 @@ export default ComposedComponent => {
 
   const mapStateToProps = state => ({
     authenticated: state.getIn(['auth', 'authenticated']),
+    admin: state.getIn(['auth', 'admin']),
   });
 
   return connect(mapStateToProps)(RequireAuth);

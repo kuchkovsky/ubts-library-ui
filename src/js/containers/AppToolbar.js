@@ -8,6 +8,7 @@ import AppToolbar from '../components/AppToolbar';
 
 const mapStateToProps = state => ({
   authenticated: state.getIn(['auth', 'authenticated']),
+  admin: state.getIn(['auth', 'admin']),
 });
 
 const mapDispatchToProps = dispatch => ({
