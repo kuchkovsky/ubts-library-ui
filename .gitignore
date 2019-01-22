@@ -1,12 +1,15 @@
 # npm
-node_modules
+/node_modules
 npm-debug.log
+
+# webpack
+/dist
 
 # eslint
 .eslintcache
 
 # VS Code
-.vscode
+/.vscode
 
 # OS X
 .DS_Store
