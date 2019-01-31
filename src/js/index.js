@@ -11,6 +11,7 @@ import rootReducer from './reducers/index';
 import authReducer from './reducers/auth';
 import bookListReducer from './reducers/bookList';
 import bookEditorReducer from './reducers/bookEditor';
+import bookViewerReducer from './reducers/bookViewer';
 import App from './components/App';
 import { setupAxiosAuthHeader, setupAxiosInterceptor } from './utils/auth';
 import history from './utils/history';
@@ -20,6 +21,7 @@ const reducer = combineReducers({
   auth: authReducer,
   bookList: bookListReducer,
   bookEditor: bookEditorReducer,
+  bookViewer: bookViewerReducer,
   form: formReducer,
 });
 

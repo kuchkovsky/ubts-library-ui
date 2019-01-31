@@ -14,7 +14,12 @@ import UploadBookIcon from '@material-ui/icons/AddCircle';
 import SignInIcon from '@material-ui/icons/AccountCircle';
 import SignOutIcon from '@material-ui/icons/ExitToApp';
 import ProgressLink from '../containers/ProgressLink';
-import * as routes from '../utils/routes';
+import {
+  deriveHeaderFromPath,
+  HOME,
+  BOOK_EDITOR_NEW_BOOK,
+  SIGN_IN,
+} from '../utils/routes';
 
 const styles = {
   list: {
@@ -35,25 +40,26 @@ const AppDrawer = ({ classes, open, toggleDrawer, authenticated, admin, signOut 
         </Typography>
         <Divider />
         <List>
-          <ListItem button key={routes.HOME} component={ProgressLink} to={routes.HOME}>
+          <ListItem button key={HOME} component={ProgressLink} to={HOME}>
             <ListItemIcon>
               <HomeIcon/>
             </ListItemIcon>
-            <ListItemText primary={routes.deriveHeaderFromPath(routes.HOME)}/>
+            <ListItemText primary={deriveHeaderFromPath(HOME)}/>
           </ListItem>
           { admin &&
-              <ListItem button key={routes.NEW_BOOK} component={Link} to={routes.NEW_BOOK}>
+              <ListItem button key={BOOK_EDITOR_NEW_BOOK}
+                component={Link} to={BOOK_EDITOR_NEW_BOOK}>
                 <ListItemIcon>
                   <UploadBookIcon/>
                 </ListItemIcon>
-                <ListItemText primary={routes.deriveHeaderFromPath(routes.NEW_BOOK)}/>
+                <ListItemText primary={deriveHeaderFromPath(BOOK_EDITOR_NEW_BOOK)}/>
               </ListItem> }
           { !authenticated &&
-              <ListItem button key={routes.SIGN_IN} component={Link} to={routes.SIGN_IN}>
+              <ListItem button key={SIGN_IN} component={Link} to={SIGN_IN}>
                 <ListItemIcon>
                   <SignInIcon/>
                 </ListItemIcon>
-                <ListItemText primary={routes.deriveHeaderFromPath(routes.SIGN_IN)}/>
+                <ListItemText primary={deriveHeaderFromPath(SIGN_IN)}/>
               </ListItem> }
           { authenticated &&
               <ListItem button key="SignOut" onClick={signOut}>

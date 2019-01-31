@@ -2,9 +2,11 @@ export const HOME = '/';
 
 export const SIGN_IN = '/signin';
 
-export const BOOKS = '/books';
+export const BOOK_EDITOR = '/books/edit';
 
-export const NEW_BOOK = '/books/new';
+export const BOOK_EDITOR_NEW_BOOK = '/books/edit/new';
+
+export const BOOK_VIEWER = '/books/view';
 
 const routes = [
   {
@@ -16,12 +18,16 @@ const routes = [
     name: 'Увійти в акаунт',
   },
   {
-    path: NEW_BOOK,
+    path: BOOK_EDITOR_NEW_BOOK,
     name: 'Додати книгу',
   },
   {
-    pathRegex: `${BOOKS}/\\d$`,
+    pathRegex: `${BOOK_EDITOR}/\\d$`,
     name: 'Редагувати книгу',
+  },
+  {
+    pathRegex: `${BOOK_VIEWER}/\\d$`,
+    name: 'Інформація про книгу',
   },
 ];
 

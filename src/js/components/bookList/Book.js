@@ -13,7 +13,8 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import DownloadIcon from '@material-ui/icons/CloudDownload';
 import Typography from '@material-ui/core/Typography';
-import { BOOKS } from '../../utils/routes';
+import bookImg from '../../../img/book.png';
+import { BOOK_EDITOR, BOOK_VIEWER } from '../../utils/routes';
 import { BOOK_DOCUMENT } from '../../utils/apiEndpoints';
 import BookInfoItem from './BookInfoItem';
 import { downloadFile } from '../../utils/files';
@@ -40,13 +41,13 @@ const styles = theme => ({
 });
 
 const Book = ({ classes, data, applyFilter, booksTab, admin, onDelete }) => (
-  <ListItem button>
+  <ListItem button component={Link} to={`${BOOK_VIEWER}/${data.id}`}>
     <ListItemAvatar>
       <Avatar alt={data.title}
         src={ data.cover ? (
           `${process.env.API_URL}/files/books/${data.id}/covers/${data.cover}`
         ) : (
-          '/src/img/book.png'
+          bookImg
         ) }
         className={classes.cover}/>
     </ListItemAvatar>
@@ -79,7 +80,7 @@ const Book = ({ classes, data, applyFilter, booksTab, admin, onDelete }) => (
         { admin &&
             <React.Fragment>
               <Grid>
-                <IconButton aria-label="Edit" component={Link} to={`${BOOKS}/${data.id}`}>
+                <IconButton aria-label="Edit" component={Link} to={`${BOOK_EDITOR}/${data.id}`}>
                   <EditIcon/>
                 </IconButton>
               </Grid>

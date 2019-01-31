@@ -5,6 +5,7 @@ import history from '../utils/history';
 import { SIGN_IN } from '../utils/apiEndpoints';
 import { HOME } from '../utils/routes';
 import { loadBooks } from './bookList';
+import { resetBook } from './bookViewer';
 
 export const SIGNING_IN = 'SIGNING_IN';
 export const signingIn = createAction(SIGNING_IN);
@@ -27,6 +28,7 @@ export const signIn = credentials =>
         auth.setupAxiosAuthHeader();
         dispatch((signInSuccess()));
         dispatch(loadBooks());
+        dispatch(resetBook());
       })
       .catch(() => dispatch(signInFailed()));
   };
@@ -38,4 +40,5 @@ export const signOut = () =>
     dispatch(signedOut());
     history.push(HOME);
     dispatch(loadBooks());
+    dispatch(resetBook());
   };

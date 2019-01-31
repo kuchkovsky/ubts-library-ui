@@ -13,7 +13,12 @@ import Typography from '@material-ui/core/Typography';
 import MenuIcon from '@material-ui/icons/Menu';
 import { withStyles } from '@material-ui/core/styles';
 import ProgressLink from '../containers/ProgressLink';
-import * as routes from '../utils/routes';
+import {
+  deriveHeaderFromPath,
+  HOME,
+  BOOK_EDITOR_NEW_BOOK,
+  SIGN_IN,
+} from '../utils/routes';
 
 const styles = theme => ({
   root: {
@@ -61,16 +66,16 @@ const AppToolbar = ({ classes, toggleDrawer, location, authenticated, admin, sig
         <MenuIcon />
       </IconButton>
       <Typography variant="h6" color="inherit" className={classes.grow}>
-        { routes.deriveHeaderFromPath(location.pathname) }
+        { deriveHeaderFromPath(location.pathname) }
       </Typography>
       <div className={classes.wideScreen}>
-        <LocationAwareButton text={routes.deriveHeaderFromPath(routes.HOME)} color="inherit"
-          component={ProgressLink} from={location.pathname} to={routes.HOME} delay={0}>
+        <LocationAwareButton text={deriveHeaderFromPath(HOME)} color="inherit"
+          component={ProgressLink} from={location.pathname} to={HOME} delay={0}>
           <HomeIcon className={classes.leftIcon}/>
         </LocationAwareButton>
         { admin &&
-          <LocationAwareButton text={routes.deriveHeaderFromPath(routes.NEW_BOOK)} color="inherit"
-            component={Link} from={location.pathname} to={routes.NEW_BOOK}>
+          <LocationAwareButton text={deriveHeaderFromPath(BOOK_EDITOR_NEW_BOOK)} color="inherit"
+            component={Link} from={location.pathname} to={BOOK_EDITOR_NEW_BOOK}>
             <AddBookIcon className={classes.leftIcon}/>
           </LocationAwareButton>
         }
@@ -81,8 +86,8 @@ const AppToolbar = ({ classes, toggleDrawer, location, authenticated, admin, sig
               Вийти з акаунту
             </Button>
           ) : (
-            <LocationAwareButton text={routes.deriveHeaderFromPath(routes.SIGN_IN)} color="inherit"
-              component={Link} from={location.pathname} to={routes.SIGN_IN}>
+            <LocationAwareButton text={deriveHeaderFromPath(SIGN_IN)} color="inherit"
+              component={Link} from={location.pathname} to={SIGN_IN}>
               <SignInIcon className={classes.leftIcon}/>
             </LocationAwareButton>
           )

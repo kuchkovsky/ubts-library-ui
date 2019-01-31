@@ -56,7 +56,7 @@ const Form = props => {
         component={ReduxTextField}
         fullWidth variant="outlined" margin="normal"/>
       <Field name="description" label="Опис книги"
-        component={ReduxTextField}
+        component={ReduxTextField} multiline
         fullWidth variant="outlined" margin="normal"/>
       <Field name="notes" label="Примітки"
         component={ReduxTextField}
