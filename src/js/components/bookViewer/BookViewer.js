@@ -6,9 +6,10 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import DownloadIcon from '@material-ui/icons/CloudDownload';
-import bookImg from '../../img/book.png';
-import { BOOK_DOCUMENT } from '../utils/apiEndpoints';
-import { downloadFile } from '../utils/files';
+import bookImg from '../../../img/book.png';
+import { BOOK_DOCUMENT } from '../../utils/apiEndpoints';
+import { downloadFile } from '../../utils/files';
+import CommentList from './CommentList';
 
 export const styles = theme => ({
   main: {
@@ -39,6 +40,10 @@ export const styles = theme => ({
   leftIcon: {
     marginRight: theme.spacing.unit,
   },
+  commentList: {
+    width: 'auto',
+    marginTop: 20,
+  },
 });
 
 class BookViewer extends Component {
@@ -67,40 +72,53 @@ class BookViewer extends Component {
     </Grid>
   )
 
-  render() {
+  renderBook = () => {
     const { classes, book } = this.props;
+    return (
+      <Paper className={classes.paper}>
+        { this.renderTitle(book.title) }
+        <Grid container justify="center" spacing={24}>
+          <Grid item>
+            <img src={book.coverFileName ? (
+              `${process.env.API_URL}/files/books/${book.id}/covers/${book.coverFileName}`
+            ) : (
+              bookImg
+            ) }/>
+          </Grid>
+          <Grid item className={classes.fieldList}>
+            { this.renderBookField('Автор:', book.author) }
+            { this.renderBookField('Видавництво:', book.publisher) }
+            { this.renderBookField('Рік видання:', book.publicationYear) }
+            { this.renderBookField('Кількість сторінок:', book.pages) }
+            { book.classifier && this.renderBookField('Класифікатор:', book.classifier) }
+            { this.renderBookField('Опис:', book.description) }
+            { book.notes && this.renderBookField('Примітки:', book.notes) }
+            { this.renderBookField('Наявність в друкованому форматі:', book.availableOffline ? 'Так' : 'Ні') }
+          </Grid>
+        </Grid>
+        { book.document &&
+            <Button variant="outlined" color="secondary" className={classes.downloadButton}
+              onClick={() => downloadFile(`${process.env.API_URL}${BOOK_DOCUMENT(book.id)}`)}
+            >
+              <DownloadIcon className={classes.leftIcon}/>
+              Завантажити книгу
+            </Button> }
+      </Paper>
+    );
+  }
+
+  render() {
+    const { book } = this.props;
+    const { classes, authenticated, ...other } = this.props;
     return (
       <main className={classes.main}>
         { book &&
-          <Paper className={classes.paper}>
-            { this.renderTitle(book.title) }
-            <Grid container justify="center" spacing={24}>
-              <Grid item>
-                <img src={book.coverFileName ? (
-                  `${process.env.API_URL}/files/books/${book.id}/covers/${book.coverFileName}`
-                ) : (
-                  bookImg
-                ) }/>
-              </Grid>
-              <Grid item className={classes.fieldList}>
-                { this.renderBookField('Автор:', book.author) }
-                { this.renderBookField('Видавництво:', book.publisher) }
-                { this.renderBookField('Рік видання:', book.publicationYear) }
-                { this.renderBookField('Кількість сторінок:', book.pages) }
-                { book.classifier && this.renderBookField('Класифікатор:', book.classifier) }
-                { this.renderBookField('Опис:', book.description) }
-                { book.notes && this.renderBookField('Примітки:', book.notes) }
-                { this.renderBookField('Наявність в друкованому форматі:', book.availableOffline ? 'Так' : 'Ні') }
-              </Grid>
-            </Grid>
-            { book.document &&
-              <Button variant="outlined" color="secondary" className={classes.downloadButton}
-                onClick={() => downloadFile(`${process.env.API_URL}${BOOK_DOCUMENT(book.id)}`)}
-              >
-                <DownloadIcon className={classes.leftIcon}/>
-                Завантажити книгу
-              </Button> }
-          </Paper>
+          <React.Fragment>
+            { this.renderBook() }
+            { authenticated &&
+              <CommentList className={classes.commentList} {...other}/>
+            }
+          </React.Fragment>
         }
       </main>
     );
@@ -123,6 +141,10 @@ BookViewer.propTypes = {
     description: PropTypes.string.isRequired,
   }),
   loadBook: PropTypes.func.isRequired,
+  authenticated: PropTypes.bool.isRequired,
+  comment: PropTypes.string.isRequired,
+  changeCommentInput: PropTypes.func.isRequired,
+  sendComment: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(BookViewer);

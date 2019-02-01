@@ -11,14 +11,29 @@ export const deleteToken = () => localStorage.removeItem('token');
 
 export const isAuthenticated = () => !!getToken();
 
-export const isAdmin = () => {
+const decodeProfile = () => {
   const token = getToken();
   if (token) {
     const encodedProfile = token.split('.')[1];
-    const profile = JSON.parse(window.atob(encodedProfile));
+    return JSON.parse(window.atob(encodedProfile));
+  }
+  return null;
+};
+
+export const isAdmin = () => {
+  const profile = decodeProfile();
+  if (profile) {
     return profile.roles.includes('ROLE_ADMIN');
   }
   return false;
+};
+
+export const getLogin = () => {
+  const profile = decodeProfile();
+  if (profile) {
+    return profile.sub;
+  }
+  return null;
 };
 
 export const setupAxiosAuthHeader = () => {
