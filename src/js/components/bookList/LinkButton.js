@@ -6,7 +6,7 @@ import { bigDisplayInfoStyles } from './Book';
 const styles = theme => ({
   root: {
     background: 'none !important',
-    color: 'blue',
+    color: '#ff3d00',
     border: 'none',
     padding: '0 !important',
     font: 'inherit',

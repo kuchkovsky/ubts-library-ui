@@ -53,7 +53,7 @@ const Book = ({ classes, data, applyFilter, booksTab, admin, onDelete }) => (
     </ListItemAvatar>
     <ListItemText
       primary={
-        <Typography variant="headline" color="textPrimary">
+        <Typography variant="h5" color="textPrimary">
           {data.title}
         </Typography>
       }

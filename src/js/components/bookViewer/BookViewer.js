@@ -77,7 +77,7 @@ class BookViewer extends Component {
     return (
       <Paper className={classes.paper}>
         { this.renderTitle(book.title) }
-        <Grid container justify="center" spacing={24}>
+        <Grid container spacing={24}>
           <Grid item>
             <img src={book.coverFileName ? (
               `${process.env.API_URL}/files/books/${book.id}/covers/${book.coverFileName}`

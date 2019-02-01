@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { Router } from 'react-router-dom';
 import axios from 'axios';
+import { MuiThemeProvider } from '@material-ui/core/styles';
 import rootReducer from './reducers/index';
 import authReducer from './reducers/auth';
 import bookListReducer from './reducers/bookList';
@@ -15,6 +16,7 @@ import bookViewerReducer from './reducers/bookViewer';
 import App from './components/App';
 import { setupAxiosAuthHeader, setupAxiosInterceptor } from './utils/auth';
 import history from './utils/history';
+import theme from './theme';
 
 const reducer = combineReducers({
   root: rootReducer,
@@ -39,7 +41,9 @@ setupAxiosInterceptor(store);
 render((
   <Provider store={store}>
     <Router history={history}>
-      <App/>
+      <MuiThemeProvider theme={theme}>
+        <App/>
+      </MuiThemeProvider>
     </Router>
   </Provider>
 ), document.getElementById('root'));
