@@ -18,6 +18,9 @@ const styles = {
   avatar: {
     backgroundColor: red[500],
   },
+  text: {
+    whiteSpace: 'pre-line',
+  },
   actions: {
     display: 'flex',
   },
@@ -35,7 +38,7 @@ const Comment = ({ classes, data, showDelete, onDelete }) => (
       subheader={data.dateTime}
     />
     <CardContent>
-      <Typography variant="subtitle1">
+      <Typography variant="subtitle1" className={classes.text}>
         { data.text }
       </Typography>
     </CardContent>

@@ -16,9 +16,11 @@ export const contentLoadError = createAction(CONTENT_LOAD_ERROR);
 export const CONTENT_LOAD_EMPTY_CONTENT = 'CONTENT_LOAD_EMPTY_CONTENT';
 export const contentLoadEmpty = createAction(CONTENT_LOAD_EMPTY_CONTENT);
 
-export const loadMainContent = (url, onSuccessAction) =>
+export const loadMainContent = (url, onSuccessAction, noAnimation = false) =>
   dispatch => {
-    dispatch(contentLoading());
+    if (!noAnimation) {
+      dispatch(contentLoading());
+    }
     axios.get(url)
       .then(response => {
         const { data } = response;
@@ -26,10 +28,12 @@ export const loadMainContent = (url, onSuccessAction) =>
           dispatch(contentLoadEmpty());
         }
         dispatch(onSuccessAction(data));
-        dispatch(contentLoaded());
+        if (!noAnimation) {
+          dispatch(contentLoaded());
+        }
       })
       .catch(error => dispatch(contentLoadError({
         message: `Не вдалося завантажити дані: ${error.message}`,
-        retryAction: () => dispatch(loadMainContent(url, onSuccessAction)),
+        retryAction: () => dispatch(loadMainContent(url, onSuccessAction, noAnimation)),
       })));
   };

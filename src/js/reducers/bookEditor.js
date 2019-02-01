@@ -44,7 +44,7 @@ const bookEditorReducer = (state = initialState, action) => {
 
   case actions.BOOK_EDITOR_BOOK_UPLOADED:
     return state
-      .set('book', initialState.get('book'))
+      .set('book', action.payload ? state.get('book') : initialState.get('book'))
       .setIn(['upload', 'pending'], false);
 
   case actions.BOOK_EDITOR_BOOK_UPLOAD_ERROR:

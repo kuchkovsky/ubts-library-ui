@@ -14,6 +14,7 @@ import {
 
 const mapStateToProps = state => ({
   books: state.getIn(['bookList', 'books']).toJS(),
+  listUpdating: state.getIn(['bookList', 'listUpdating']),
   emptyList: state.getIn(['root', 'contentLoad', 'empty']),
   searchQuery: state.getIn(['bookList', 'searchQuery']),
   booksTab: state.getIn(['bookList', 'booksTab']),

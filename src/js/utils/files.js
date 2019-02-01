@@ -1,17 +1,11 @@
 import axios from 'axios';
 import { BOOK_DOWNLOAD_TOKEN } from './apiEndpoints';
 
-export const toBase64 = file =>
+export const toDataUrl = file =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
-    reader.onload = () => {
-      let encoded = reader.result.replace(/^data:(.*;base64,)?/, '');
-      if ((encoded.length % 4) > 0) {
-        encoded += '='.repeat(4 - (encoded.length % 4));
-      }
-      resolve(encoded);
-    };
+    reader.onload = () => resolve(reader.result);
     reader.onerror = error => reject(error);
   });
 
@@ -25,4 +19,4 @@ export const downloadFile = url => {
     });
 };
 
-export default toBase64;
+export default toDataUrl;

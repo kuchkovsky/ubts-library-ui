@@ -24,9 +24,12 @@ export const removeBookFromList = createAction(BOOK_LIST_REMOVE_BOOK);
 export const BOOK_LIST_TOGGLE_DELETE_ERROR_MESSAGE = 'BOOK_LIST_TOGGLE_DELETE_ERROR_MESSAGE';
 export const toggleDeleteErrorMessage = createAction(BOOK_LIST_TOGGLE_DELETE_ERROR_MESSAGE);
 
-export const loadBooks = () =>
+export const BOOK_LIST_BOOK_UPDATING = 'BOOK_LIST_BOOK_UPDATING';
+export const bookUpdating = createAction(BOOK_LIST_BOOK_UPDATING);
+
+export const loadBooks = (noAnimation = false) =>
   dispatch =>
-    dispatch(loadMainContent(BOOKS, booksLoaded));
+    dispatch(loadMainContent(BOOKS, booksLoaded, noAnimation));
 
 export const deleteBook = id =>
   dispatch =>

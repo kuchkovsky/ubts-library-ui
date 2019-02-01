@@ -13,6 +13,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import DownloadIcon from '@material-ui/icons/CloudDownload';
 import Typography from '@material-ui/core/Typography';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import bookImg from '../../../img/book.png';
 import { BOOK_EDITOR, BOOK_VIEWER } from '../../utils/routes';
 import { BOOK_DOCUMENT } from '../../utils/apiEndpoints';
@@ -26,22 +27,39 @@ export const bigDisplayInfoStyles = {
 const styles = theme => ({
   cover: {
     borderRadius: 0,
-    width: 150,
     [theme.breakpoints.down('sm')]: {
       width: 100,
     },
     [theme.breakpoints.up('sm')]: {
-      width: 200,
+      width: 150,
     },
     height: 'auto',
   },
   format: {
     [theme.breakpoints.up('sm')]: bigDisplayInfoStyles,
   },
+  progressWrapper: {
+    margin: theme.spacing.unit,
+    position: 'relative',
+    opacity: 0.5,
+    pointerEvents: 'none',
+  },
+  progressSpinner: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginTop: -32,
+    marginLeft: -32,
+  },
 });
 
+const preventLinkClick = e => e.target.type && e.preventDefault();
+
 const Book = ({ classes, data, applyFilter, booksTab, admin, onDelete }) => (
-  <ListItem button component={Link} to={`${BOOK_VIEWER}/${data.id}`}>
+  <ListItem button onClick={preventLinkClick} component={Link} to={`${BOOK_VIEWER}/${data.id}`}
+    className={data.updating ? classes.progressWrapper : ''}>
+    { data.updating &&
+      <CircularProgress size={64} className={classes.progressSpinner} color="secondary" disableShrink/> }
     <ListItemAvatar>
       <Avatar alt={data.title}
         src={ data.cover ? (
@@ -76,7 +94,7 @@ const Book = ({ classes, data, applyFilter, booksTab, admin, onDelete }) => (
         </React.Fragment>
       }/>
     <ListItemSecondaryAction>
-      <Grid container direction="column">
+      <Grid container direction="column" className={data.updating ? classes.progressWrapper : ''}>
         { admin &&
             <React.Fragment>
               <Grid>
@@ -114,6 +132,7 @@ Book.propTypes = {
     cover: PropTypes.string,
     availableOffline: PropTypes.bool,
     availableOnline: PropTypes.bool,
+    updating: PropTypes.bool,
   }).isRequired,
   applyFilter: PropTypes.func.isRequired,
   booksTab: PropTypes.number.isRequired,

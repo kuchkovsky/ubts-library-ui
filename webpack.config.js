@@ -38,6 +38,7 @@ module.exports = (_, options) => ({
   plugins: [
     new CleanWebpackPlugin(['dist']),
     new HtmlWebPackPlugin({
+      favicon: './src/img/favicon.ico',
       template: './src/index.html',
       filename: './index.html',
       chunksSortMode: 'manual',

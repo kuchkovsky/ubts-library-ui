@@ -15,6 +15,17 @@ export const changeCommentInput = createAction(BOOK_VIEWER_CHANGE_COMMENT_INPUT)
 export const BOOK_VIEWER_REMOVE_COMMENT = 'BOOK_VIEWER_REMOVE_COMMENT';
 export const removeCommentFromList = createAction(BOOK_VIEWER_REMOVE_COMMENT);
 
+export const BOOK_VIEWER_SHOW_COMMENT_DELETE_ALERT = 'BOOK_VIEWER_SHOW_COMMENT_DELETE_ALERT';
+export const showCommentDeleteAlert = createAction(BOOK_VIEWER_SHOW_COMMENT_DELETE_ALERT);
+
+export const BOOK_VIEWER_HIDE_COMMENT_DELETE_ALERT = 'BOOK_VIEWER_HIDE_COMMENT_DELETE_ALERT';
+export const hideCommentDeleteAlert = createAction(BOOK_VIEWER_HIDE_COMMENT_DELETE_ALERT);
+
+export const BOOK_VIEWER_TOGGLE_COMMENT_DELETE_ERROR_MESSAGE =
+  'BOOK_VIEWER_TOGGLE_COMMENT_DELETE_ERROR_MESSAGE';
+export const toggleCommentDeleteErrorMessage =
+  createAction(BOOK_VIEWER_TOGGLE_COMMENT_DELETE_ERROR_MESSAGE);
+
 export const loadBook = id =>
   dispatch =>
     dispatch(loadMainContent(`${BOOKS}/${id}`, bookLoaded));
@@ -32,4 +43,5 @@ export const sendComment = bookId =>
 export const deleteComment = id =>
   dispatch =>
     axios.delete(`${COMMENTS}/${id}`)
-      .then(() => dispatch(removeCommentFromList(id)));
+      .then(() => dispatch(removeCommentFromList(id)))
+      .catch(() => dispatch(toggleCommentDeleteErrorMessage(true)));

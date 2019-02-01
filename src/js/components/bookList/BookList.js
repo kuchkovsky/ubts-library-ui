@@ -14,9 +14,10 @@ import Snackbar from '@material-ui/core/Snackbar';
 import BookIcon from '@material-ui/icons/Book';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ClearIcon from '@material-ui/icons/Clear';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import Book from './Book';
-import DeleteBookAlert from './DeleteBookAlert';
 import SnackbarMessage from '../shared/SnackbarMessage';
+import ConfirmationAlert from '../shared/ConfirmationAlert';
 
 const styles = theme => ({
   card: {
@@ -28,6 +29,10 @@ const styles = theme => ({
   listMessageGrid: {
     paddingTop: 20,
     paddingBottom: 20,
+  },
+  progress: {
+    padding: 3,
+    margin: '15px 0 10px 0',
   },
 });
 
@@ -96,17 +101,21 @@ class BookList extends Component {
 
   renderDeleteAlert = () => {
     const { deleteAlert, hideDeleteAlert, deleteBook } = this.props;
-
+    const onConfirm = () => {
+      deleteBook(deleteAlert.bookId);
+      hideDeleteAlert();
+    };
     return (
-      <DeleteBookAlert
-        deleteAlert={deleteAlert}
-        hideDeleteAlert={hideDeleteAlert}
-        deleteBook={deleteBook}
+      <ConfirmationAlert
+        title="Ви справді бажаєте видалити дану книгу?"
+        showAlert={deleteAlert.show}
+        onConfirm={onConfirm}
+        onReject={hideDeleteAlert}
       />
     );
   }
 
-  renderSnackbarPopup = () => {
+  renderDeleteErrorPopup = () => {
     const { deleteErrorMessage, toggleDeleteErrorMessage } = this.props;
 
     const hideErrorMessage = () => toggleDeleteErrorMessage(false);
@@ -134,6 +143,7 @@ class BookList extends Component {
     const {
       classes,
       books,
+      listUpdating,
       booksTab,
       changeSearchQuery,
       admin,
@@ -159,6 +169,8 @@ class BookList extends Component {
       <Card className={classes.card}>
         { this.renderSearchBar() }
         { this.renderTabs() }
+        { listUpdating &&
+          <LinearProgress className={classes.progress} color="secondary"/> }
         <List component="nav">
           { bookList }
           { !bookList.length &&
@@ -170,7 +182,7 @@ class BookList extends Component {
           }
         </List>
         { this.renderDeleteAlert() }
-        { this.renderSnackbarPopup() }
+        { this.renderDeleteErrorPopup() }
       </Card>
     );
   }
@@ -179,6 +191,7 @@ class BookList extends Component {
 BookList.propTypes = {
   classes: PropTypes.object.isRequired,
   books: PropTypes.array.isRequired,
+  listUpdating: PropTypes.bool.isRequired,
   emptyList: PropTypes.bool.isRequired,
   searchQuery: PropTypes.string.isRequired,
   booksTab: PropTypes.number.isRequired,
@@ -186,7 +199,10 @@ BookList.propTypes = {
   changeSearchQuery: PropTypes.func.isRequired,
   changeBooksTab: PropTypes.func.isRequired,
   admin: PropTypes.bool.isRequired,
-  deleteAlert: PropTypes.object.isRequired,
+  deleteAlert: PropTypes.shape({
+    show: PropTypes.bool.isRequired,
+    bookId: PropTypes.string,
+  }).isRequired,
   showDeleteAlert: PropTypes.func.isRequired,
   hideDeleteAlert: PropTypes.func.isRequired,
   deleteBook: PropTypes.func.isRequired,

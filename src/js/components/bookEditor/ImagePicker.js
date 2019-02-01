@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FilePond } from 'react-filepond';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
-import { toBase64 } from '../../utils/files';
+import { toDataUrl } from '../../utils/files';
 
 const styles = {
   root: {
@@ -19,7 +19,7 @@ const styles = {
 class ImagePicker extends Component {
   handleChange = pondFiles =>
     pondFiles.map(pondFile =>
-      toBase64(pondFile.file)
+      toDataUrl(pondFile.file)
         .then(encodedFile => this.props.input.onChange(encodedFile)));
 
   handleRemove = () => this.props.input.onChange('');
