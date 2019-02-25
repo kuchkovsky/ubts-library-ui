@@ -2,13 +2,14 @@ export const validateForm = fields =>
   values => {
     const errors = {};
     fields.forEach(field => {
-      if (field.required && !values.get(field.name)) {
+      const value = values.get(field.name);
+      if (field.required && (!value && value !== 0)) {
         errors[field.name] = field.required;
         return;
       }
       if (field.minLength) {
         const [length, text] = field.minLength;
-        if (values.get(field.name).length < length) {
+        if (value.length < length) {
           errors[field.name] = text;
         }
       }
