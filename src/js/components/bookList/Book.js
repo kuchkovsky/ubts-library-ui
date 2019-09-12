@@ -87,7 +87,7 @@ const Book = ({ classes, data, applyFilter, booksTab, admin, onDelete }) => (
           { !!data.tags.length && <BookInfoItem title="Теги" data={data.tags} applyFilter={applyFilter}/> }
           <Typography className={classes.format} component="span" color="textPrimary">
             В наявності:
-            {` ${data.availableOffline ? `друкована книга${data.availableOnline ? ', ' : ''}` : ''}`}
+            {` ${data.availableOffline ? `друкована книга ${admin ? `(${data.numberOfCopies} шт.)` : ''}${data.availableOnline ? ', ' : ''}` : ''}`}
             {` ${data.availableOnline ? 'електронна книга' : ''}`}
             { !(data.availableOffline || data.availableOnline) && 'немає' }
           </Typography>

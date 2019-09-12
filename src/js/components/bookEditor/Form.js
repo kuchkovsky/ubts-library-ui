@@ -75,7 +75,7 @@ const Form = props => {
         disabled={!upload.error && (pristine || invalid || upload.pending || documentUploadPending)}
         className={classes.submit}
       >
-        Завантажити книгу
+        Зберегти
       </Button>
     </form>
   );

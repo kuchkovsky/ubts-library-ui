@@ -34,6 +34,10 @@ const styles = theme => ({
     padding: 3,
     margin: '15px 0 10px 0',
   },
+  stats: {
+    marginTop: 10,
+    marginBottom: -20,
+  },
 });
 
 class BookList extends Component {
@@ -56,6 +60,27 @@ class BookList extends Component {
   onChangeHelper = e => this.props.changeSearchQuery(e.target.value);
 
   clearSearchField = () => this.props.changeSearchQuery('');
+
+  renderStats = (titleNumber, copyNumber) => (
+    <Grid
+      container
+      justify="center"
+      alignItems="center"
+      spacing={16}
+      className={this.props.classes.stats}
+    >
+      <Grid item>
+        <Typography variant="subtitle1" color="inherit">
+          Кількість титулів: {titleNumber}
+        </Typography>
+      </Grid>
+      <Grid item>
+        <Typography variant="subtitle1" color="inherit">
+          Кількість примірників: {copyNumber}
+        </Typography>
+      </Grid>
+    </Grid>
+  );
 
   renderSearchBar = () => (
     <div className={this.props.classes.search}>
@@ -165,8 +190,15 @@ class BookList extends Component {
         />
       ));
 
+    const titleNumber = books.length;
+    const copyNumber = books
+      .map(book => book.numberOfCopies || 0)
+      .reduce((a, b) => a + b, 0);
+
     return (
       <Card className={classes.card}>
+        { admin &&
+          this.renderStats(titleNumber, copyNumber) }
         { this.renderSearchBar() }
         { this.renderTabs() }
         { listUpdating &&
